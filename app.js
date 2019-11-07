@@ -18,7 +18,7 @@ var http = require('http').createServer(app);
 app.get('/', function(req, res){
   res.send('<h1>Hello world</h1>');
 });
-
-http.listen(80, function(){
-  console.log('listening on *:80');
+const port = process.env.PORT || 3000;
+http.listen(port, function(){
+  console.log('listening on *:' + port);
 });
