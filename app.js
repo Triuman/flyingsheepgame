@@ -10,3 +10,15 @@
 //number=462 ise bağlanmaya çalıştıkları odanın adı "flying462sheep" olabilir.
 //İki tab birbirine bağlanınca arka plan renklerinin yeri tam zıttı olsun ikisinde de.
 //Birisinde mouse hareket ettirince diğerinde bir top hareket etsin
+
+
+var app = require('express')();
+var http = require('http').createServer(app);
+
+app.get('/', function(req, res){
+  res.send('<h1>Hello world</h1>');
+});
+
+http.listen(3000, function(){
+  console.log('listening on *:3000');
+});
