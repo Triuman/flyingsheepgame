@@ -11,13 +11,15 @@
 //İki tab birbirine bağlanınca arka plan renklerinin yeri tam zıttı olsun ikisinde de.
 //Birisinde mouse hareket ettirince diğerinde bir top hareket etsin
 
-
-var app = require('express')();
+const express = require('express');
+var app = express();
 var http = require('http').createServer(app);
 
-app.get('/', function(req, res){
-  res.send('<h1>Hello world</h1>');
-});
+app.use(express.static('public'));
+
+// app.get('/', function(req, res){
+//   res.sendFile(__dirname + '/index.html');
+// });
 const port = process.env.PORT || 3000;
 http.listen(port, function(){
   console.log('listening on *:' + port);

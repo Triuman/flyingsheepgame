@@ -1,0 +1,441 @@
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<title>Team | Flying Sheep Studios</title>
+	<meta name="description" content="Meet the people behind Flying Sheep Studios.">
+
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+
+	<meta property="og:description" content="Meet the people behind Flying Sheep Studios.">
+
+	<meta name="theme-color" content="#33b3f2">
+	<link rel="icon" sizes="192x192" href="https://flying-sheep.com/static/img/favicon_192.png">
+
+	<link rel="stylesheet" href="./assets/styles/styles.css">
+
+	<style>
+		.tooltip {
+			position: relative;
+			display: inline-block;
+			border-bottom: 1px dotted black;
+		}
+
+		.tooltip .tooltiptext {
+			visibility: hidden;
+			width: 120px;
+			background-color: #555;
+			color: #fff;
+			text-align: center;
+			border-radius: 6px;
+			padding: 5px 0;
+			position: absolute;
+			z-index: 1;
+			bottom: 125%;
+			left: 50%;
+			margin-left: -60px;
+			opacity: 0;
+			transition: opacity 0.3s;
+		}
+
+		.tooltip .tooltiptext::after {
+			content: "";
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			margin-left: -5px;
+			border-width: 5px;
+			border-style: solid;
+			border-color: #555 transparent transparent transparent;
+		}
+
+		.tooltip:hover .tooltiptext {
+			visibility: visible;
+			opacity: 1;
+		}
+	</style>
+
+
+	<script>
+
+		window["Take_your_time"] = (s) => {
+			if (s === 'hint') {
+				console.warn("Look below");
+
+
+
+				//Hint: Two tabs can communicate if they have the same ?number=
+			}
+		}
+
+		var mouseX, mouseY;
+		function findScreenCoords(mouseEvent) {
+			if (mouseEvent) {
+				//FireFox
+				mouseX = mouseEvent.x;
+				mouseY = mouseEvent.y;
+			}
+			else {
+				//IE
+				mouseX = window.event.x;
+				mouseY = window.event.y;
+			}
+			return false;
+		}
+		document.onmousemove = findScreenCoords;
+
+
+
+		function reportWindowSize() {
+			doorBorder.onresize();
+		}
+		window.onresize = reportWindowSize;
+
+
+		const DoorMass = 50;
+		const DoorSpringConstant = 0.5;
+		const MouseForcePerPixel = 0.2;
+
+		var leftDoor = new function () {
+			let initialX = 0;
+			let acceleration = 0;
+			let velocity = 0;
+			this.getX = () => parseInt(document.getElementById("imgLeftDoor").style.left);
+			this.setX = (x) => document.getElementById("imgLeftDoor").style.left = Math.min(x, initialX) + "px";
+			this.getForce = () => -DoorSpringConstant * (this.getX() - initialX);
+			this.setAcceleration = (a) => acceleration = a;
+			this.moveTo = (x) => {
+				document.getElementById("imgLeftDoor").style.left = (this.getX() - (initialX - x)) + "px";
+				initialX = x;
+			};
+			this.init = () => {
+				initialX = this.getX();
+			}
+			this.onTick = (dt) => {
+				velocity = acceleration * dt;
+				this.setX(this.getX() + (velocity > 0 && velocity < 1 ? 1 : (velocity > -1 && velocity < 0 ? -1 : velocity)));
+			};
+		};
+
+		var rightDoor = new function () {
+			let initialX = 0;
+			let acceleration = 0;
+			let velocity = 0;
+			this.getX = () => parseInt(document.getElementById("imgRightDoor").style.left);
+			this.setX = (x) => document.getElementById("imgRightDoor").style.left = Math.max(x, initialX) + "px";
+			this.getForce = () => -DoorSpringConstant * (this.getX() - initialX);
+			this.setAcceleration = (a) => acceleration = a;
+			this.moveTo = (x) => {
+				document.getElementById("imgRightDoor").style.left = (this.getX() - (initialX - x)) + "px";
+				initialX = x;
+			};
+			this.init = () => {
+				initialX = this.getX();
+			}
+			this.onTick = (dt) => {
+				velocity = acceleration * dt;
+				this.setX(this.getX() + (velocity > 0 && velocity < 1 ? 1 : (velocity > -1 && velocity < 0 ? -1 : velocity)));
+			};
+		};
+
+		var doorBorder = new function () {
+			//let initialX = 0;
+			let rightBorderDistance = 0;
+			let leftBorder, rightBorder, topBorder;
+			const initialX = 703;
+			const normalWindowSize = 1857;
+			this.getX = () => parseInt(leftBorder.style.left);
+			this.setX = (x) => {
+				leftBorder.style.left = x + "px"
+				rightBorder.style.left = (x + rightBorderDistance) + "px"
+				topBorder.style.left = x + "px"
+			};
+			this.init = () => {
+				leftBorder = document.getElementById("imgLeftBorder");
+				rightBorder = document.getElementById("imgRightBorder");
+				topBorder = document.getElementById("imgTopBorder");
+				//initialX = this.getX();
+				rightBorderDistance = parseInt(rightBorder.style.left) - initialX; 	
+			};
+			this.onresize = () => {
+				if(window.innerWidth < 1100)
+					return;
+				const midPoint = window.innerWidth / 2;
+				this.setX(midPoint - rightBorderDistance / 2 - 40);
+				rightDoor.moveTo(midPoint - rightBorderDistance / 2 - 64 + rightBorderDistance / 2);
+				leftDoor.moveTo(midPoint - rightBorderDistance / 2 + 24);
+				document.getElementById("svgDoor").style.left = (this.getX() + 60) + "px";
+			};
+		};
+
+
+		let lastAnimationTime = Date.now();
+		function animationTick() {
+			const deltaTime = Date.now() - lastAnimationTime;
+			if (leftDoorIsDragging) {
+				let mouseForce = MouseForcePerPixel * (mouseX - mouseDragStartX);
+				leftDoor.setAcceleration((mouseForce + leftDoor.getForce()) / DoorMass);
+			} else {
+				leftDoor.setAcceleration((leftDoor.getForce()) / DoorMass);
+			}
+			if (rightDoorIsDragging) {
+				let mouseForce = MouseForcePerPixel * (mouseX - mouseDragStartX);
+				rightDoor.setAcceleration((mouseForce + rightDoor.getForce()) / DoorMass);
+			} else {
+				rightDoor.setAcceleration((rightDoor.getForce()) / DoorMass);
+			}
+			leftDoor.onTick(deltaTime);
+			rightDoor.onTick(deltaTime);
+			lastAnimationTime = Date.now();
+			window.requestAnimationFrame(animationTick);
+		}
+
+		window.onload = () => {
+			leftDoor.init();
+			rightDoor.init();
+			doorBorder.init();
+			window.requestAnimationFrame(animationTick);
+		};
+
+		var mouseDragStartX;
+
+		var isMouseOnLeftDoor = false;
+		var leftDoorIsDragging = false;
+		function onLeftDoorDragStart(e) {
+			console.log("onLeftDoorDragStart");
+			mouseDragStartX = e.x;
+			leftDoorIsDragging = true;
+			return false;
+		}
+		var isMouseOnRightDoor = false;
+		var rightDoorIsDragging = false;
+		function onRightDoorDragStart(e) {
+			console.log("onRightDoorDragStart");
+			mouseDragStartX = e.x;
+			rightDoorIsDragging = true;
+			return false;
+		}
+
+		document.onmouseup = () => {
+			console.log("on mouse up");
+			leftDoorIsDragging = false;
+			rightDoorIsDragging = false;
+		};
+
+
+	</script>
+</head>
+
+<body style="min-width: 1100px;">
+	<div id="content">
+		<header id="mainHeader">
+			<h1 id="logo" class="">
+				<a href="https://flying-sheep.com/" title="Flying Sheep Studios">
+					<img alt="Flying Sheep Studios" src="./assets/images/logo_fs_small.png" width="83" height="82" class="small">
+				</a>
+			</h1>
+
+			<nav>
+				<div id="burger"></div>
+				<ul id="topMenu">
+					<li><a href="https://flying-sheep.com/games" title="Games">Games</a></li>
+					<li><a href="https://flying-sheep.com/team" title="Team">Team</a></li>
+					<li><a href="https://flying-sheep.com/services" title="Services">Services</a></li>
+					<li><a href="https://flying-sheep.com/jobs" title="Jobs">Jobs</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main>
+			<article class="content team">
+				<header>
+					<h1>Team</h1>
+					<div>
+						<strong>I heard you love games!</strong>
+						<p>
+							So I prepared a game for you.<br>
+							<br>
+							The Rule<br>
+							Cheat.<br><br>
+
+							The Goal<br>
+							Find me.
+							<span class="tooltip">('hint')
+								<span class="tooltiptext">Take_your_time(s)</span>
+							</span>
+
+						</p>
+					</div>
+				</header>
+
+
+
+				<img src="./assets/images/doorBorderTop.png" id="imgTopBorder" class="grab" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 703px;top: 329px;" alt="">
+				<img src="./assets/images/doorBorderLeft.png" id="imgLeftBorder" class="grab" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 703px;top: 393px;" alt="">
+				<img src="./assets/images/doorBorderRight.png" id="imgRightBorder" class="grab" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 1072px;top: 393px;" alt="">
+				<img src="./assets/images/doorLeft.png" id="imgLeftDoor" class="grab" onmousedown="onLeftDoorDragStart(event);" style="position: absolute;z-index: 99999;left: 766px;top: 393px;" alt="">
+				<img src="./assets/images/doorRight.png" id="imgRightDoor" class="grab" onmousedown="onRightDoorDragStart(event);" style="position: absolute;z-index: 99999;left: 863px;top: 393px;" alt="">
+
+
+				<svg id="svgDoor" height="1076" width="434" style="z-index: 9999999999999;position: absolute;left: 766px;top: 393px;">
+					<polygon id="polyLeft" onmousedown="onLeftDoorDragStart(event);" points="0,0 150,0 150,35 200,160 200,290 100,540 100,800 150,920 150,1050 0,1050" style="fill:lime;" fill-opacity="0" />
+					<polygon id="polyRight" onmousedown="onRightDoorDragStart(event);" points="310,0 150,0 150,35 200,160 200,290 100,540 100,800 150,920 150,1050 310,1050" style="fill:lime;" fill-opacity="0" />
+					You cannot expect to play a game in a browser that does not support SVG, right?
+				</svg>
+
+				<div class="flex">
+					<section class="contentBlock" style="visibility: collapse;">
+					</section>
+
+					<section class="contentBlock">
+						<div class="sectionMain">
+							<header>
+								<img src="./assets/images/avatar_hasan.png" width="195" height="160" alt="Daniel">
+								<h1>Hasan</h1>
+
+								<aside class="links">
+									<a href="mailto:daniel@flying-sheep.com" title="E-mail">
+										<img src="./assets/images/icon_m.png" width="36" height="36" alt="E-mail">
+									</a>
+									<a href="https://linkedin.com/in/danielnienhaus" target="_blank" title="Linkedin profile">
+										<img src="./assets/images/icon_s_l.png" width="36" height="36" alt="Linkedin profile">
+									</a>
+									<a href="https://flying-sheep.com/team" title="↻">
+										<img src="./assets/images/icon_reload.png" width="36" height="36" alt="↻">
+									</a>
+								</aside>
+							</header>
+							<p>Software Developer | Game Designer</p>
+							<aside>
+								<table>
+									<thead>
+										<tr>
+											<th>
+												<h1>Skills</h1>
+											</th>
+											<th>Lvl</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Algoritm Expertise</td>
+											<td>Turn leight</td>
+										</tr>
+										<tr>
+											<td>Telekinesis</td>
+											<td>WebRTC</td>
+										</tr>
+										<tr>
+											<td>Philosophy</td>
+											<td>???</td>
+										</tr>
+									</tbody>
+								</table>
+							</aside>
+							<p>His first coding was on a C64 at age 12. He precisely printed sum of 2 and 3.</p>
+							<p>As soon as he learned programming he started developing games. He is very into physics
+								games so he worked on 2D physics games most of the time. He also really enjoy beaming
+								electrons from one device to another and he turned his first snake game into a local
+								multiplayer game in high school.</p>
+							<p>After many small games, he founded his own company by getting an R&D fund from the
+								government to develop his biggest game project. He made mistakes by over-developing,
+								lost his motivation, left his company and started searching for the meaning of life.</p>
+							<aside class="funFacts">
+								<h1>Fun Facts</h1>
+								<p>In high school, he made a chat program using FTP only to be able to chat with his
+									girlfriend whose workplace had blocked messengers.</p>
+							</aside>
+							<aside class="funFacts">
+								<h1>Favourite Games</h1>
+								<p>
+									Dune II · Prince Of Persia · Michael Jackson's Moonwalker (Sega Genesis)
+								</p>
+							</aside>
+							<aside class="funFacts">
+								<p>
+									<q>If you don't create your own meaning, someone else will do it for you.</q>
+								</p>
+							</aside>
+						</div>
+					</section>
+
+					<section class="contentBlock" style="visibility: collapse;">
+					</section>
+				</div>
+			</article>
+		</main>
+
+		<footer>
+			<aside class="imprint">
+				<h1>Imprint</h1>
+
+				<address>
+					<strong>Flying Sheep Studios GmbH</strong><br>
+					Cologne Game Haus<br>
+					Deutz-Mülheimer Str. 30<br>
+					50679 Cologne<br>
+					Germany
+				</address>
+
+				<p>
+					District court: Köln HRB 81400<br>
+					Managing director: Thomas Rössig<br>
+					VAT-ID-NR: DE294885938
+				</p>
+				E-mail: <a href="mailto:info@flying-sheep.com" title="E-mail">info@flying-sheep.com</a><br>
+				E-mail for job applications: <a href="mailto:jobs@flying-sheep.com" title="E-mail for job applications">jobs@flying-sheep.com</a><br>
+				Phone: <a href="tel:+4922198658848" title="Phone">+49 221 986 588 48</a>
+				<p></p>
+				<p>
+					<a href="https://flying-sheep.com/static/presskit" title="Press Kit" class="highlight" target="_blank">Press Kit</a>
+					·
+					<a href="https://flying-sheep.com/privacy" title="Privacy &amp; Legal" class="highlight">Privacy
+						&amp; Legal</a>
+				</p>
+				<p>
+				</p>
+			</aside>
+
+			<aside class="partners">
+				<h1>Our Customers</h1>
+				<p>
+					<img src="./assets/images/partners_superrtl.png" width="113" height="22" alt="SUPER RTL">
+					<img src="./assets/images/partners_toggo.png" width="114" height="70" alt="TOGGO">
+					<img src="./assets/images/partners_dreamworks.png" width="191" height="33" alt="DreamWorks">
+				</p>
+			</aside>
+
+			<aside class="trade">
+				<h1>Memberships</h1>
+				<p>
+					<a href="https://colognegamehaus.com/" target="_blank" title="Cologne Game Haus"> <img src="./assets/images/logo_cgh.png" alt="Cologne Game Haus Logo">
+					</a><a href="https://www.game.de/" target="_blank" title="game – Verband der deutschen Games-Branche e.V."> <img src="./assets/images/logo_game.png" alt="game Logo">
+					</a><a href="http://games.nrw/" target="_blank" title="games.nrw"> <img src="./assets/images/logo_gamesnrw.png" alt="games.nrw Logo">
+					</a> </p>
+			</aside>
+
+			<aside class="social">
+				<h1>Social Media</h1>
+				<p>
+					<a href="https://www.facebook.com/flyingsheepcologne" target="_blank" title="Flying Sheep on Facebook">
+						<img src="./assets/images/icon_s_f.png" width="36" height="36" alt="Facebook Logo"> Facebook
+					</a>
+					<a href="https://twitter.com/flyingsheeple" target="_blank" title="Flying Sheep on Twitter">
+						<img src="./assets/images/icon_s_t.png" width="36" height="36" alt="Twitter Logo"> Twitter
+					</a>
+				</p>
+			</aside>
+
+			<aside class="legal">
+				<p>All trademarks and characters belong to their respective copyright owners.<br>
+				</p>
+				<p>© Flying Sheep Studios GmbH, All rights reserved</p>
+			</aside>
+		</footer>
+	</div>
+
+</body>
+
+</html>

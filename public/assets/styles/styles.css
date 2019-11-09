@@ -1,0 +1,1387 @@
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box
+}
+
+button,
+button:active,
+button:focus {
+  border: 0;
+  outline: none;
+  background: none
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-size: inherit;
+  font-weight: inherit
+}
+
+a {
+  text-decoration: none
+}
+
+a:visited,
+a:active,
+a:focus {
+  color: inherit
+}
+
+a img {
+  border: 0
+}
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box
+}
+
+button,
+button:active,
+button:focus {
+  border: 0;
+  outline: none;
+  background: none
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-size: inherit;
+  font-weight: inherit
+}
+
+a {
+  text-decoration: none
+}
+
+a:visited,
+a:active,
+a:focus {
+  color: inherit
+}
+
+a img {
+  border: 0
+}
+
+#logo {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 32px
+}
+
+@media screen and (max-width: 640px) {
+  #logo {
+    left: 16px
+  }
+}
+
+#logo a {
+  display: block
+}
+
+#logo img.small {
+  width: 83px;
+  height: 82px;
+  display: block
+}
+
+#logo img.large {
+  width: 160px;
+  height: 260px;
+  display: none
+}
+
+@media screen and (max-width: 640px) {
+  #logo img.large {
+    width: 25vw;
+    height: 40.625vw
+  }
+}
+
+#logo.big {
+  left: 0
+}
+
+#logo.big img.small {
+  display: none
+}
+
+#logo.big img.large {
+  display: block
+}
+
+#mainHeader {
+  position: relative;
+  background: #33b3f2;
+  padding-top: 25px;
+  z-index: 10
+}
+
+#mainHeader nav {
+  background: #474747
+}
+
+#mainHeader nav ul {
+  height: 28px;
+  padding-right: 30px;
+  text-align: right
+}
+
+@media screen and (max-width: 640px) {
+  #mainHeader nav ul {
+    padding-right: 4.6875vw
+  }
+}
+
+#mainHeader nav ul:after {
+  content: "";
+  display: table;
+  clear: both
+}
+
+#mainHeader nav li {
+  display: inline-block
+}
+
+#mainHeader nav a {
+  height: 28px;
+  line-height: 27px;
+  vertical-align: middle;
+  display: block;
+  color: #fff;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 300;
+  margin-right: 15px;
+  font-size: 18px
+}
+
+@media screen and (max-width: 640px) {
+  #mainHeader nav a {
+    margin-right: 2.34375vw
+  }
+}
+
+#mainHeader nav #burger {
+  display: none
+}
+
+@media screen and (max-width: 640px) {
+  #mainHeader nav #burger {
+    display: block;
+    width: 26px;
+    height: 26px;
+    margin-left: auto;
+    margin-right: 10px;
+    background-image: url(/assets/images/gfx/burger_off.png)
+  }
+}
+
+@media screen and (max-width: 640px) and (max-width: 640px) {
+  #mainHeader nav #burger {
+    margin-right: 1.5625vw
+  }
+}
+
+@media screen and (max-width: 640px) {
+  #mainHeader nav ul {
+    height: inherit;
+    text-align: right;
+    padding-right: 0px;
+    display: none
+  }
+
+  #mainHeader nav li {
+    display: block;
+    float: none;
+    border-top: 1px solid #fb0
+  }
+
+  #mainHeader nav.showList ul {
+    display: block
+  }
+
+  #mainHeader nav.showList #burger {
+    background-image: url(/assets/images/gfx/burger_on.png)
+  }
+}
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box
+}
+
+button,
+button:active,
+button:focus {
+  border: 0;
+  outline: none;
+  background: none
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-size: inherit;
+  font-weight: inherit
+}
+
+a {
+  text-decoration: none
+}
+
+a:visited,
+a:active,
+a:focus {
+  color: inherit
+}
+
+a img {
+  border: 0
+}
+
+footer {
+  background: #474747;
+  margin-top: 16px;
+  font-size: 12px;
+  line-height: 1.75
+}
+
+footer:after {
+  content: "";
+  display: table;
+  clear: both
+}
+
+footer:before {
+  content: "";
+  display: block;
+  background: #33b3f2;
+  height: 5px
+}
+
+footer aside {
+  float: left;
+  width: 490px
+}
+
+@media screen and (max-width: 640px) {
+  footer aside {
+    width: auto;
+    float: none
+  }
+}
+
+footer address {
+  font-style: normal;
+  margin-bottom: 16px
+}
+
+footer a {
+  color: #fff
+}
+
+footer a.highlight {
+  text-transform: uppercase;
+  text-decoration: underline;
+  font-weight: 700
+}
+
+footer p {
+  margin-bottom: 16px
+}
+
+footer h1 {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 400;
+  margin-bottom: 16px
+}
+
+footer strong {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 400
+}
+
+footer .imprint {
+  padding: 40px 0 0 88px;
+  min-height: 410px
+}
+
+@media screen and (max-width: 640px) {
+  footer .imprint {
+    width: auto
+  }
+}
+
+footer .partners {
+  padding-top: 40px
+}
+
+footer .partners h1 {
+  margin-bottom: 0
+}
+
+
+footer .partners img {
+  vertical-align: middle
+}
+
+
+footer .legal p {
+  margin-bottom: 0
+}
+
+
+footer .trade p {
+  line-height: 60px
+}
+
+footer .trade img {
+  vertical-align: middle;
+  margin-right: 21px
+}
+
+
+footer .social a {
+  margin-right: 20px
+}
+
+footer .social img {
+  vertical-align: middle;
+  margin-right: 6px
+}
+
+@media screen and (min-width: 1023px) {
+  #content.game footer {
+    margin-top: 0
+  }
+}
+
+html {
+  background: #33b3f2;
+  font-family: 'Cabin', sans-serif;
+  color: #fff
+}
+
+strong {
+  font-weight: bold
+}
+
+.mirrorIcon {
+  -ms-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1)
+}
+
+#content {
+  max-width: 1023px;
+  background: #fb0;
+  margin: 0 auto;
+  -webkit-box-shadow: 0 0 5px 5px rgba(71, 71, 71, 0.55);
+  box-shadow: 0 0 5px 5px rgba(71, 71, 71, 0.55)
+}
+
+
+a.button {
+  display: block;
+  width: 238px;
+  height: 95px;
+  text-align: center;
+  color: #fff;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 300;
+  font-size: 32px;
+  padding-top: 10px;
+  text-decoration: none !important;
+  margin: auto
+}
+
+a.button.alt {
+  width: 362px;
+  height: 109px;
+  font-weight: 400;
+  font-size: 36px;
+  padding-top: 24px
+}
+
+a.button.pullUp {
+  position: absolute;
+  bottom: -32px;
+  left: 0;
+  right: 0
+}
+
+a.button.green {
+  background-image: url(/assets/images/gfx/button_a_02.png)
+}
+
+a.button.green.alt {
+  background-image: url(/assets/images/gfx/button_b_02.png)
+}
+
+a.button.orange {
+  background-image: url(/assets/images/gfx/button_a_03.png)
+}
+
+a.button.orange.alt {
+  background-image: url(/assets/images/gfx/button_b_03.png)
+}
+
+a.button.purple {
+  background-image: url(/assets/images/gfx/button_a_01.png);
+  color: #fff
+}
+
+a.button.purple.alt {
+  background-image: url(/assets/images/gfx/button_b_01.png)
+}
+
+a.button.float {
+  display: table;
+  table-layout: fixed
+}
+
+a.button.twolinetext {
+  padding-top: 0px;
+  line-height: 34px
+}
+
+div.button.two {
+  display: flex
+}
+
+article.content a {
+  text-decoration: underline;
+  color: inherit
+}
+
+article.content ul {
+  list-style: square;
+  padding: 0 50px 16px;
+  line-height: 1.3
+}
+
+article.content li {
+  margin-bottom: 8px
+}
+
+article.content>header {
+  position: relative;
+  z-index: 2;
+  padding-top: 60px
+}
+
+article.content>header:before {
+  z-index: -1;
+  position: absolute;
+  content: "";
+  display: block;
+  background: #67ba16;
+  top: -100px;
+  left: 0;
+  right: 0;
+  bottom: -100px;
+  transform: skewY(-2deg)
+}
+
+article.content>header div {
+  display: table-cell;
+  padding-left: 16px;
+  padding-right: 16px;
+  vertical-align: top
+}
+
+@media screen and (max-width: 640px) {
+  article.content>header div {
+    display: block
+  }
+}
+
+article.content>header h1 {
+  font-size: 54px;
+  width: 320px;
+  padding-left: 32px;
+  margin-left: 16px;
+  margin-bottom: 32px;
+  text-transform: uppercase;
+  display: table-cell;
+  line-height: 1;
+  vertical-align: top
+}
+
+@media screen and (max-width: 640px) {
+  article.content>header h1 {
+    display: block;
+    padding-left: 0
+  }
+}
+
+article.content>header strong {
+  font-size: 32px;
+  line-height: 1;
+  margin-bottom: 16px;
+  font-family: 'Roboto Slab', serif;
+  display: block
+}
+
+article.content>header p {
+  margin-bottom: 32px
+}
+
+article.content .flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch
+}
+
+article.content .flex>section {
+  position: relative;
+  z-index: 3
+}
+
+article.content .flex>section.contentBlock {
+  margin-left: 11.5px;
+  width: 326px
+}
+
+article.content .flex>section.contentBlock header {
+  text-align: center;
+  padding-top: 32px;
+  position: relative
+}
+
+article.content .flex>section.contentBlock p {
+  padding: 0 32px 16px;
+  line-height: 1.3
+}
+
+article.content .flex>section.contentBlock .sectionMain {
+  background-image: url(/assets/images/gfx/divbg_center.png);
+  background-repeat: repeat-y;
+  padding-bottom: 70px;
+  height: calc(100% - 43px)
+}
+
+article.content .flex>section.contentBlock:before,
+article.content .flex>section.contentBlock:after {
+  content: "";
+  display: block;
+  height: 22px;
+  background-repeat: no-repeat
+}
+
+@media screen and (max-width: 640px) {
+
+  article.content .flex>section.contentBlock:before,
+  article.content .flex>section.contentBlock:after {
+    height: 6.71875vw;
+    background-size: 100% 6.71875vw
+  }
+}
+
+article.content .flex>section.contentBlock:before {
+  background-position: left bottom;
+  margin-bottom: -1px
+}
+
+article.content .flex>section.contentBlock:after {
+  background-position: left top
+}
+
+article.content .flex>section.contentBlock:nth-child(odd):before {
+  background-image: url(/assets/images/gfx/divbg_top_r.png)
+}
+
+article.content .flex>section.contentBlock:nth-child(odd):after {
+  background-image: url(/assets/images/gfx/divbg_bottom_r.png)
+}
+
+article.content .flex>section.contentBlock:nth-child(even):before {
+  background-image: url(/assets/images/gfx/divbg_top_l.png)
+}
+
+article.content .flex>section.contentBlock:nth-child(even):after {
+  background-image: url(/assets/images/gfx/divbg_bottom_l.png)
+}
+
+article.content .flex>section.gameTeaser {
+  margin-bottom: 5px
+}
+
+article.content .flex>section.gameTeaser img {
+  display: block
+}
+
+@media screen and (max-width: 492px) {
+  article.content .flex>section.gameTeaser img {
+    width: 100vw;
+    height: auto
+  }
+}
+
+article.content .flex>section.gameTeaser .bottom {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px;
+  background: rgba(71, 71, 71, 0.7);
+  color: #fff;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 400;
+  font-size: 18px
+}
+
+@media screen and (max-width: 492px) {
+  article.content .flex>section.gameTeaser .bottom {
+    font-size: 3.6585365854vw
+  }
+}
+
+article.content .flex>section.gameTeaser .bottom .title {
+  text-transform: uppercase
+}
+
+article.content .flex>section.gameTeaser .bottom:after {
+  content: "";
+  display: block;
+  width: 26px;
+  height: 26px;
+  background-repeat: no-repeat;
+  background-image: url(/assets/images/gfx/button_more.png);
+  background-size: contain;
+  float: right
+}
+
+@media screen and (max-width: 492px) {
+  article.content .flex>section.gameTeaser .bottom:after {
+    width: 5.2845528455vw;
+    height: 5.2845528455vw
+  }
+}
+
+article.content .flex>section.gameTeaser:nth-child(odd) {
+  margin-left: 16px
+}
+
+article.content .flex>section.gameTeaser:nth-child(even) {
+  margin-left: 5px
+}
+
+article.content section.standAlone {
+  color: #474747;
+  padding: 32px
+}
+
+article.content section.standAlone:after {
+  content: "";
+  display: table;
+  clear: both
+}
+
+article.content section.standAlone h1 {
+  font-size: 32px;
+  margin-bottom: 32px
+}
+
+article.content section.standAlone p {
+  margin-bottom: 16px
+}
+
+article.content section.standAlone img {
+  margin: 0 16px 16px
+}
+
+article.content section.standAlone img.left {
+  float: left
+}
+
+article.content section.standAlone img.right {
+  float: right
+}
+
+article.content section.standAlone.centered {
+  text-align: center;
+  padding: 0 16px;
+  max-width: 640px;
+  margin: 75px auto 50px
+}
+
+article.content.services header:before {
+  background: #b05adc;
+  top: -100px
+}
+
+article.content.services .flex>section h1 {
+  font-size: 32px;
+  line-height: 1.5;
+  margin-bottom: 16px
+}
+
+article.content.team header:before {
+  background: #67ba16;
+  top: -100px
+}
+
+article.content.jobs header:before {
+  background: #3f7ce8
+}
+
+article.content.games header:before {
+  background: #ef6429
+}
+
+article.content.privacy header {
+  position: static;
+  width: auto
+}
+
+article.content.privacy header:before {
+  display: none
+}
+
+article.content.privacy header h1 {
+  font-size: 32px;
+  margin-bottom: 16px;
+  color: #474747;
+  display: block;
+  text-transform: none;
+  vertical-align: baseline;
+  line-height: 1.3;
+  padding-left: 32px;
+  margin-left: 0
+}
+
+article.content.team .flex>section h1,
+article.content.jobs .flex>section h1 {
+  background: #474747;
+  margin: 0 3px 16px 4px;
+  box-shadow: 2px 7px 2px -2px rgba(71, 71, 71, 0.4);
+  font-size: 24px;
+  text-align: left;
+  padding-left: 32px;
+  line-height: 1.5
+}
+
+@media screen and (max-width: 640px) {
+
+  article.content.team .flex>section h1,
+  article.content.jobs .flex>section h1 {
+    margin: 0 .9375vw 16px 1.25vw
+  }
+}
+
+article.content.team .flex>section table,
+article.content.jobs .flex>section table {
+  display: block;
+  margin: 0 32px 32px;
+  background: rgba(71, 71, 71, 0.5);
+  border-collapse: collapse;
+  padding: 16px 32px;
+  font-size: 12px;
+  white-space: nowrap
+}
+
+article.content.team .flex>section th,
+article.content.jobs .flex>section th {
+  line-height: 2;
+  border-bottom: 1px solid #fff;
+  font-weight: 700
+}
+
+article.content.team .flex>section th:nth-child(odd),
+article.content.jobs .flex>section th:nth-child(odd) {
+  width: 100%;
+  text-align: left
+}
+
+article.content.team .flex>section th:nth-child(even),
+article.content.jobs .flex>section th:nth-child(even) {
+  width: 100%;
+  text-align: right
+}
+
+article.content.team .flex>section th h1,
+article.content.jobs .flex>section th h1 {
+  font-size: inherit;
+  background: inherit;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  font-family: 'Cabin', sans-serif;
+  font-weight: 700
+}
+
+article.content.team .flex>section td,
+article.content.jobs .flex>section td {
+  line-height: 1.5
+}
+
+article.content.team .flex>section td.skull,
+article.content.jobs .flex>section td.skull {
+  display: flex
+}
+
+article.content.team .flex>section td.skull img,
+article.content.jobs .flex>section td.skull img {
+  margin-left: 1px
+}
+
+article.content.team .flex>section td:nth-child(odd),
+article.content.jobs .flex>section td:nth-child(odd) {
+  text-align: left
+}
+
+article.content.team .flex>section td:nth-child(even),
+article.content.jobs .flex>section td:nth-child(even) {
+  text-align: right
+}
+
+article.content.team .flex>section aside.links,
+article.content.jobs .flex>section aside.links {
+  position: absolute;
+  bottom: 48px;
+  right: 32px;
+  display: flex;
+  flex-direction: column
+}
+
+article.content.team .flex>section aside.funFacts h1,
+article.content.jobs .flex>section aside.funFacts h1 {
+  background: inherit;
+  box-shadow: none;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0
+}
+
+article.content.team .flex>section aside.funFacts q,
+article.content.jobs .flex>section aside.funFacts q {
+  font-style: italic
+}
+
+article.content.start .flex {
+  margin-top: -64px
+}
+
+article.content.start .flex>section h1 {
+  font-size: 32px;
+  line-height: 1.5;
+  margin-bottom: 16px
+}
+
+article.content.start .flex>section .sectionMain {
+  min-height: 500px
+}
+
+@article.content.game {
+  position: relative;
+  margin-top: 13px;
+  margin-bottom: 0
+}
+
+article.content.game:after {
+  content: "";
+  display: table;
+  clear: both
+}
+
+article.content.game .description {
+  width: 326px;
+  margin-right: 27px;
+  float: right
+}
+
+
+article.content.game .description h1 {
+  font-size: 36px;
+  font-weight: 600;
+  padding: 0 32px 16px;
+  line-height: 1.3
+}
+
+article.content.game .description p {
+  padding: 0 32px 16px;
+  line-height: 1.3;
+  font-size: 18px
+}
+
+article.content.game .description .sectionMain {
+  background-image: url(/assets/images/gfx/divbg_center.png);
+  background-repeat: repeat-y;
+  min-height: 600px;
+  padding-bottom: 145px
+}
+
+
+article.content.game .description:before {
+  content: "";
+  display: block;
+  height: 22px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-image: url(/assets/images/gfx/divbg_top_l.png)
+}
+
+
+@media screen and (max-width: 640px) {
+  article.content.game .description:before {
+    height: 6.71875vw;
+    background-size: 100% 6.71875vw
+  }
+}
+
+
+@media screen and (max-width: 640px) {
+  article.content.game .description:after {
+    height: 6.71875vw;
+    background-size: 100% 6.71875vw
+  }
+}
+
+article.content.game #cover {
+  float: left
+}
+
+
+@media screen and (max-width: 640px) {
+  article.content.game #cover img {
+    width: 100%
+  }
+}
+
+article.content.game .icons {
+  position: absolute;
+  bottom: 27px;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  float: left
+}
+
+
+@media screen and (min-width: 1023px) {
+  article.content.game .icons.noLink:after {
+    content: "";
+    width: 362px;
+    height: 109px;
+    padding-top: 24px;
+    display: inline-block
+  }
+}
+
+article.content.game .icons img {
+  height: 60px;
+  display: inline-block;
+  margin-top: 20px;
+  margin-right: 16px
+}
+
+article.content.game .icons img:last-of-type {
+  margin-right: 39px
+}
+
+article.content.game .icons a {
+  display: inline-block
+}
+
+
+article.content.game #screenshots {
+  position: absolute;
+  background: #ef6429;
+  width: 675px;
+  height: 95px;
+  bottom: 41px;
+  padding: 3px 0 0 47px
+}
+
+
+article.content.game #screenshots img {
+  height: 88px;
+  cursor: pointer
+}
+
+article.content.game #screenshots img.selected {
+  outline: 3px solid #33b3f2;
+  outline-offset: -3px
+}
+
+
+@media screen and (max-width: 640px) {
+  article.content.game #screenshots img {
+    width: 100%
+  }
+}
+
+main {
+  overflow: hidden
+}
+
+main article h1,
+main article h2,
+main article h3,
+main article h4,
+main article h5 {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 400
+}
+
+#slideShow {
+  position: relative
+}
+
+#slideShow .mask {
+  height: 400px;
+  overflow: hidden;
+  position: relative
+}
+
+#slideShow .mask:after {
+  content: "";
+  display: table;
+  clear: both
+}
+
+@media screen and (max-width: 640px) {
+  #slideShow .mask {
+    height: 62.5vw
+  }
+}
+
+#slideShow .marker {
+  position: absolute;
+  bottom: 70px;
+  right: 10px
+}
+
+#slideShow .slideShowItem {
+  display: block;
+  position: absolute;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  opacity: 1;
+  visibility: visible
+}
+
+#slideShow .slideShowItem.hidden {
+  opacity: 0;
+  visibility: hidden
+}
+
+
+@media screen and (max-width: 640px) {
+  #slideShow .slideShowItem {
+    left: -29.921875vw
+  }
+
+  #slideShow .slideShowItem img {
+    height: 62.5vw;
+    width: auto
+  }
+}
+
+
+.grab {
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.grabbing {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+/* vietnamese */
+@font-face {
+  font-family: 'Cabin';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Cabin Italic'), local('Cabin-Italic'), url(https://fonts.gstatic.com/s/cabin/v14/u-4_0qWljRw-Pd81z_BCnhRv.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Cabin';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Cabin Italic'), local('Cabin-Italic'), url(https://fonts.gstatic.com/s/cabin/v14/u-4_0qWljRw-Pd81z_FCnhRv.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Cabin';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Cabin Italic'), local('Cabin-Italic'), url(https://fonts.gstatic.com/s/cabin/v14/u-4_0qWljRw-Pd81z_9Cng.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* vietnamese */
+@font-face {
+  font-family: 'Cabin';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Cabin'), local('Cabin-Regular'), url(https://fonts.gstatic.com/s/cabin/v14/u-4x0qWljRw-Pd8___1amg.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Cabin';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Cabin'), local('Cabin-Regular'), url(https://fonts.gstatic.com/s/cabin/v14/u-4x0qWljRw-Pd8-__1amg.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Cabin';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Cabin'), local('Cabin-Regular'), url(https://fonts.gstatic.com/s/cabin/v14/u-4x0qWljRw-Pd8w__0.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* vietnamese */
+@font-face {
+  font-family: 'Cabin';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Cabin Bold'), local('Cabin-Bold'), url(https://fonts.gstatic.com/s/cabin/v14/u-480qWljRw-PdeL2uhquylWeg.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Cabin';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Cabin Bold'), local('Cabin-Bold'), url(https://fonts.gstatic.com/s/cabin/v14/u-480qWljRw-PdeL2uhruylWeg.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Cabin';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Cabin Bold'), local('Cabin-Bold'), url(https://fonts.gstatic.com/s/cabin/v14/u-480qWljRw-PdeL2uhluyk.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Slab Light'), local('RobotoSlab-Light'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngRUXZYTXPIvIBgJJSb6u9mxLCLwR26eg.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+/* cyrillic */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Slab Light'), local('RobotoSlab-Light'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngRUXZYTXPIvIBgJJSb6u9mxLCCwR26eg.woff2) format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+/* greek-ext */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Slab Light'), local('RobotoSlab-Light'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngRUXZYTXPIvIBgJJSb6u9mxLCKwR26eg.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+
+/* greek */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Slab Light'), local('RobotoSlab-Light'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngRUXZYTXPIvIBgJJSb6u9mxLCFwR26eg.woff2) format('woff2');
+  unicode-range: U+0370-03FF;
+}
+
+/* vietnamese */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Slab Light'), local('RobotoSlab-Light'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngRUXZYTXPIvIBgJJSb6u9mxLCJwR26eg.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Slab Light'), local('RobotoSlab-Light'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngRUXZYTXPIvIBgJJSb6u9mxLCIwR26eg.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Slab Light'), local('RobotoSlab-Light'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngRUXZYTXPIvIBgJJSb6u9mxLCGwR0.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Slab Regular'), local('RobotoSlab-Regular'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngMUXZYTXPIvIBgJJSb6ufA5qW54A.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+/* cyrillic */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Slab Regular'), local('RobotoSlab-Regular'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngMUXZYTXPIvIBgJJSb6ufJ5qW54A.woff2) format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+/* greek-ext */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Slab Regular'), local('RobotoSlab-Regular'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngMUXZYTXPIvIBgJJSb6ufB5qW54A.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+
+/* greek */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Slab Regular'), local('RobotoSlab-Regular'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngMUXZYTXPIvIBgJJSb6ufO5qW54A.woff2) format('woff2');
+  unicode-range: U+0370-03FF;
+}
+
+/* vietnamese */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Slab Regular'), local('RobotoSlab-Regular'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngMUXZYTXPIvIBgJJSb6ufC5qW54A.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Slab Regular'), local('RobotoSlab-Regular'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngMUXZYTXPIvIBgJJSb6ufD5qW54A.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Slab Regular'), local('RobotoSlab-Regular'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngMUXZYTXPIvIBgJJSb6ufN5qU.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Slab Bold'), local('RobotoSlab-Bold'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngRUXZYTXPIvIBgJJSb6u92w7CLwR26eg.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+/* cyrillic */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Slab Bold'), local('RobotoSlab-Bold'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngRUXZYTXPIvIBgJJSb6u92w7CCwR26eg.woff2) format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+/* greek-ext */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Slab Bold'), local('RobotoSlab-Bold'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngRUXZYTXPIvIBgJJSb6u92w7CKwR26eg.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+
+/* greek */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Slab Bold'), local('RobotoSlab-Bold'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngRUXZYTXPIvIBgJJSb6u92w7CFwR26eg.woff2) format('woff2');
+  unicode-range: U+0370-03FF;
+}
+
+/* vietnamese */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Slab Bold'), local('RobotoSlab-Bold'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngRUXZYTXPIvIBgJJSb6u92w7CJwR26eg.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Slab Bold'), local('RobotoSlab-Bold'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngRUXZYTXPIvIBgJJSb6u92w7CIwR26eg.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Slab Bold'), local('RobotoSlab-Bold'), url(https://fonts.gstatic.com/s/robotoslab/v9/BngRUXZYTXPIvIBgJJSb6u92w7CGwR0.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
