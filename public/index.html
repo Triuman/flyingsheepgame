@@ -244,7 +244,7 @@
 		const key = params.get("key");
 		var socket;
 		if (key) {
-			socket = io("http://" + window.location.host);
+			socket = io("https://" + window.location.host);
 			socket.on('connect', function () {
 				console.log("IO connected");
 				socket.emit("register", key);

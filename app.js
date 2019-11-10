@@ -14,7 +14,7 @@
 const io = require('socket.io')();
 const express = require('express');
 var app = express();
-var http = require('http').createServer(app);
+var http = require('https').createServer(app);
 
 io.attach(http, {
   pingInterval: 10000,
