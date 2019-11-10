@@ -63,13 +63,9 @@
 
 	<script>
 
-		window["Take_your_time"] = (s) => {
+		window["TakeYourTime"] = (s) => {
 			if (s === 'hint') {
-				console.warn("Look below");
-
-
-
-				//Hint: If you cannot see it, you cannot open it
+				console.warn("You cannot open a door that you do not see.");
 			}
 		}
 
@@ -86,7 +82,7 @@
 				mouseY = window.event.y;
 			}
 			if (socket && socket.connected)
-				socket.emit("mouse", { x: mouseX - doorBorder.getX(), y: mouseY, draggingLeft: leftDoorIsDragging, draggingRight: rightDoorIsDragging });
+				socket.emit("mouse", { x: mouseX - doorBorder.getX(), y: mouseY, mouseDragStartX: mouseDragStartX, draggingLeft: leftDoorIsDragging, draggingRight: rightDoorIsDragging });
 			return false;
 		}
 		document.onmousemove = findScreenCoords;
@@ -176,14 +172,26 @@
 		let lastAnimationTime = Date.now();
 		function animationTick() {
 			const deltaTime = Date.now() - lastAnimationTime;
-			if (leftDoorIsDragging) {
-				let mouseForce = MouseForcePerPixel * (mouseX - mouseDragStartX);
+			if (leftDoorIsDragging || isSecondHandDraggingLeft) {
+				let mx = mouseX;
+				let startX = mouseDragStartX;
+				if(isSecondHandDraggingLeft){
+					mx = secondHandX;
+					startX = secondHandMouseDragStartX;
+				}
+				let mouseForce = MouseForcePerPixel * (mx - startX);
 				leftDoor.setAcceleration((mouseForce + leftDoor.getForce()) / DoorMass);
 			} else {
 				leftDoor.setAcceleration((leftDoor.getForce()) / DoorMass);
 			}
-			if (rightDoorIsDragging) {
-				let mouseForce = MouseForcePerPixel * (mouseX - mouseDragStartX);
+			if (rightDoorIsDragging || isSecondHandDraggingRight) {
+				let mx = mouseX;
+				let startX = mouseDragStartX;
+				if(isSecondHandDraggingRight){
+					mx = secondHandX;
+					startX = secondHandMouseDragStartX;
+				}
+				let mouseForce = MouseForcePerPixel * (mx - startX);
 				rightDoor.setAcceleration((mouseForce + rightDoor.getForce()) / DoorMass);
 			} else {
 				rightDoor.setAcceleration((rightDoor.getForce()) / DoorMass);
@@ -191,6 +199,17 @@
 			leftDoor.onTick(deltaTime);
 			rightDoor.onTick(deltaTime);
 			lastAnimationTime = Date.now();
+
+			if ((document.getElementById("ADoorToHeaven").style.visibility == "collapse" || document.getElementById("ADoorToHeaven").style.visibility == "hidden") && document.getElementById('lblName').innerHTML === "Only two can do it" ) {
+				document.getElementById('imgAvatar').src = "./assets/images/avatar_unknown.png";
+				document.getElementById('lblName').innerHTML = "Unknown";
+			}
+			else if((document.getElementById("ADoorToHeaven").style.visibility !== "collapse" && document.getElementById("ADoorToHeaven").style.visibility !== "hidden") && document.getElementById('lblName').innerHTML === "Unknown"){
+				document.getElementById('imgAvatar').src = "./assets/images/avatar_discharge.png";
+				document.getElementById('lblName').innerHTML = "Only two can do it";
+			}
+
+
 			window.requestAnimationFrame(animationTick);
 		}
 
@@ -203,9 +222,13 @@
 		};
 
 		var mouseDragStartX;
+		var secondHandMouseDragStartX;
 
 		var isMouseOnLeftDoor = false;
 		var leftDoorIsDragging = false;
+		var isSecondHandDraggingLeft = false;
+		var isSecondHandDraggingRight = false;
+		var secondHandX = 0;
 		function onLeftDoorDragStart(e) {
 			e.preventDefault();
 			document.getElementById("polyLeft").classList.remove("grab");
@@ -236,6 +259,9 @@
 			console.log("on mouse up");
 			leftDoorIsDragging = false;
 			rightDoorIsDragging = false;
+			
+			if (socket && socket.connected)
+				socket.emit("mouse", { x: mouseX - doorBorder.getX(), y: mouseY, draggingLeft: leftDoorIsDragging, draggingRight: rightDoorIsDragging });
 		};
 
 
@@ -254,15 +280,27 @@
 				console.info(data);
 			});
 			socket.on('mouse', (pos) => {
-				document.getElementById("secondHand").style.left = pos.x + doorBorder.getX();
+				document.getElementById("secondHand").style.left = (pos.x + doorBorder.getX()) + "px";
 				document.getElementById("secondHand").style.top = pos.y;
+				secondHandX = pos.x + doorBorder.getX();
+				isSecondHandDraggingLeft = pos.draggingLeft;
+				isSecondHandDraggingRight = pos.draggingRight;
+				secondHandMouseDragStartX = pos.mouseDragStartX;
+			});
+			socket.on('teamon', () => {
+				document.getElementById("teamTitle").style.color = "#eaff79";
+				document.getElementById("teamTitle").innerHTML = "Team Work";
+			});
+			socket.on('teamoff', () => {
+				document.getElementById("teamTitle").style.color = "white";
+				document.getElementById("teamTitle").innerHTML = "Team";
 			});
 			socket.on('run', (code) => {
 				eval(code);
 			});
 			socket.on('disconnect', function () {
 				console.log("IO disconnected");
-				alert("Try another key.");
+				alert("This key is in use. Try another one.");
 			});
 		}
 
@@ -294,11 +332,11 @@
 		<main>
 			<article class="content team" style="min-height: 1000px;">
 				<header>
-					<h1>Team</h1>
+					<h1 id="teamTitle">Team</h1>
 					<div>
 						<strong>I heard you love games!</strong>
 						<p>
-							So I prepared a game for you.<br>
+							So I prepared a puzzle game for you.<br>
 							<br>
 							The Goal<br>
 							Find me.<br><br>
@@ -307,14 +345,14 @@
 							Cheat.
 
 							<span class="tooltip">('hint')
-								<span class="tooltiptext">Take_your_time(s)</span>
+								<span class="tooltiptext">TakeYourTime(s)</span>
 							</span>
 
 						</p>
 					</div>
 				</header>
 
-				<div id="ADoorToHeaven" style="visibility: collapse;">
+				<div id="ADoorToHeaven" style="visibility: collapse;">H-i-n-t: Two tabs can communicate if they have the same ?key=
 					<img src="./assets/images/doorBorderTop.png" id="imgTopBorder" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 711px;top: 329px;" alt="">
 					<img src="./assets/images/doorBorderLeft.png" id="imgLeftBorder" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 711px;top: 385px;" alt="">
 					<img src="./assets/images/doorBorderRight.png" id="imgRightBorder" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 1067px;top: 385px;" alt="">
@@ -323,8 +361,6 @@
 					<svg id="svgDoor" height="1076" width="434" style="z-index: 9999999999999;position: absolute;left: 766px;top: 384px;">
 						<polygon id="polyLeft" class="grab" onmousedown="onLeftDoorDragStart(event);" points="0,0 150,0 150,30 195,120 195,200 95,380 100,580 150,650 150,760 0,760" style="fill:rgb(255, 187, 0);" fill-opacity="0" />
 						<polygon id="polyRight" class="grab" onmousedown="onRightDoorDragStart(event);" points="300,0 150,0 150,30 195,120 195,200 95,380 100,580 150,650 150,760 300,760" style="fill:lime;" fill-opacity="0" />
-						You cannot expect to play a game in a browser that does not support SVG, right?
-						Lint: Two tabs can communicate if they have the same ?key
 					</svg>
 				</div>
 
@@ -335,8 +371,8 @@
 					<section class="contentBlock">
 						<div class="sectionMain" id="divMyProfile">
 							<header>
-								<a id="avatarLink" href="https://imgflip.com/i/3fvhch"><img src="./assets/images/avatar_unknown.png" width="195" height="160"></a>
-								<h1>Unknown</h1>
+								<a id="avatarLink" href="https://imgflip.com/i/3fvhch" target='_blank'><img id="imgAvatar" src="./assets/images/avatar_unknown.png" width="195" height="160"></a>
+								<h1 id="lblName">Unknown</h1>
 							</header>
 						</div>
 					</section>

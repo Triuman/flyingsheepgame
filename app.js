@@ -18,14 +18,26 @@ io.on('connection', (socket) => {
   console.log('socket connected!');
   socket.on('register', (key) => {
     if (key) {
-      //If he gives us Final Key with a time earlier than 30 seconds, we finish the game.
+      //If he gives us Final Key with a time older than 30 seconds, we finish the game.
       var split = key.split(' ');
       if (split.length == 2) {
         const code = split[0];
         const time = split[1];
-        if (code === FINAL_KEY && parseInt(time) < Date.now() - 30000) {
-          finishHim(socket);
-          return;
+        if (code === FINAL_KEY) {
+          if (parseInt(time) < Date.now() - 30000) {
+            finishHim(socket);
+            return;
+          } else {
+            socket.emit("run", `
+            window.onbeforeunload = () => {
+              localStorage.setItem('mysecret', '${FINAL_KEY} ' + Date.now());
+            };
+            
+            document.getElementById('imgAvatar').src = "./assets/images/avatar_overcharged.png";
+            document.getElementById('lblName').innerHTML = "Needs a discharge";
+            document.getElementById('avatarLink').href = 'https://serverfault.com/questions/32787/where-did-wait-30-seconds-before-turning-it-back-on-come-from';
+            `);
+          }
         }
       }
       socket.gameKey = key;
@@ -34,11 +46,13 @@ io.on('connection', (socket) => {
         socket.disconnect();
         return;
       }
-      rooms[key].push(socket);
+      rooms[key].push(socket);  
       if (rooms[key].length === 2) {
         var otherSocket = rooms[key][0];
         otherSocket.otherSocket = socket;
         socket.otherSocket = otherSocket;
+        socket.emit("teamon");
+        socket.otherSocket.emit("teamon");
         console.log('sockets are connected to each other with key ' + key);
       }
     }
@@ -52,11 +66,11 @@ io.on('connection', (socket) => {
         const m1 = pos;
         const m2 = socket.otherSocket.mouse;
         if (m1.draggingLeft && m2.draggingRight || m2.draggingLeft && m1.draggingRight) {
-          socket.emit('run', 'MouseForcePerPixel = 0.2;');
-          socket.otherSocket.emit('run', 'MouseForcePerPixel = 0.2;');
-        } else {
           socket.emit('run', 'MouseForcePerPixel = 0.1;');
           socket.otherSocket.emit('run', 'MouseForcePerPixel = 0.1;');
+        } else {
+          socket.emit('run', 'MouseForcePerPixel = 0.02;');
+          socket.otherSocket.emit('run', 'MouseForcePerPixel = 0.02;');
         }
         if (m1.draggingLeft && m2.draggingRight && m1.x < -300 && m2.x > 300 || m2.draggingLeft && m1.draggingRight && m2.x < -300 && m1.x > 300) {
 
@@ -67,7 +81,9 @@ io.on('connection', (socket) => {
             document.getElementById('avatarLink').href = 'https://serverfault.com/questions/32787/where-did-wait-30-seconds-before-turning-it-back-on-come-from';
             leftDoor.moveTo(doorBorder.getX() - 200);
             rightDoor.moveTo(doorBorder.getX() + 420);
-            document.getElementById('svgDoor').visibility = "collapse";
+            document.getElementById('svgDoor').style.visibility = "collapse";
+            document.getElementById('imgAvatar').src = "./assets/images/avatar_overcharged.png";
+            document.getElementById('lblName').innerHTML = "Needs a discharge";
           `;
 
           socket.emit('run', openDoorScript);
@@ -80,9 +96,10 @@ io.on('connection', (socket) => {
   });
   socket.on('disconnect', (reason) => {
     rooms[socket.gameKey] = null;
-    if (socket.otherSocket) {
+    if (socket.otherSocket && socket.otherSocket.connected) {
       rooms[socket.gameKey] = [socket.otherSocket];
       socket.otherSocket.otherSocket = null;
+      socket.otherSocket.emit("teamoff");
       socket.otherSocket = null;
     }
   });
@@ -172,7 +189,7 @@ function finishHim(socket) {
     index++;
     if (index >= myProfileInfo.length) {
       clearInterval(interval);
-      socket.emit('run', `confetti.start(10000);`);
+      socket.emit('run', `confetti.start(8000);`);
     }
   }, 1000)
 }
