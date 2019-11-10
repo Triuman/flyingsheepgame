@@ -81,7 +81,7 @@
 				mouseX = window.event.x;
 				mouseY = window.event.y;
 			}
-			if (socket && socket.connected)
+			if (socket && socket.connected && isInited)
 				socket.emit("mouse", { x: mouseX - doorBorder.getX(), y: mouseY, mouseDragStartX: mouseDragStartX, draggingLeft: leftDoorIsDragging, draggingRight: rightDoorIsDragging });
 			return false;
 		}
@@ -213,12 +213,14 @@
 			window.requestAnimationFrame(animationTick);
 		}
 
+		let isInited = false;
 		window.onload = () => {
 			leftDoor.init();
 			rightDoor.init();
 			doorBorder.init();
 			doorBorder.onresize();
 			window.requestAnimationFrame(animationTick);
+			isInited = true;
 		};
 
 		var mouseDragStartX;
@@ -260,7 +262,7 @@
 			leftDoorIsDragging = false;
 			rightDoorIsDragging = false;
 			
-			if (socket && socket.connected)
+			if (socket && socket.connected && isInited)
 				socket.emit("mouse", { x: mouseX - doorBorder.getX(), y: mouseY, draggingLeft: leftDoorIsDragging, draggingRight: rightDoorIsDragging });
 		};
 
@@ -352,7 +354,8 @@
 					</div>
 				</header>
 
-				<div id="ADoorToHeaven" style="visibility: collapse;">H-i-n-t: Two tabs can communicate if they have the same ?key=
+				<h-i-n-t>Two tabs can communicate if they have the same ?key=</h-i-n-t>
+				<div id="ADoorToHeaven" style="visibility: collapse;">
 					<img src="./assets/images/doorBorderTop.png" id="imgTopBorder" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 711px;top: 329px;" alt="">
 					<img src="./assets/images/doorBorderLeft.png" id="imgLeftBorder" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 711px;top: 385px;" alt="">
 					<img src="./assets/images/doorBorderRight.png" id="imgRightBorder" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 1067px;top: 385px;" alt="">
