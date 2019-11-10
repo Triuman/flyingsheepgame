@@ -1,23 +1,6 @@
 
 const FINAL_KEY = 'VERYSPECIALCODE';
 
-const winston = require('winston');
-
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  defaultMeta: { service: 'user-service' },
-  transports: [
-    //
-    // - Write to all logs with level `info` and below to `combined.log` 
-    // - Write all logs error (and below) to `error.log`.
-    //
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' })
-  ]
-});
-
-
 const io = require('socket.io')();
 const express = require('express');
 var app = express();
@@ -35,10 +18,8 @@ io.on('connection', (socket) => {
   console.log('socket connected!');
   socket.on('register', (key) => {
     const address = socket.handshake.address;
-    logger.log({
-      level: 'info',
-      message: Date.now()  + ': Socket connected with Key: ' + key + ' Adress: ' + address
-    });
+    console.log(Date.now() + ': Socket registered with Key: ' + key + ' Adress: ' + address);
+
     if (key) {
       //If he gives us Final Key with a time older than 30 seconds, we finish the game.
       var split = key.split(' ');
@@ -47,17 +28,11 @@ io.on('connection', (socket) => {
         const time = split[1];
         if (code === FINAL_KEY) {
           if (parseInt(time) < Date.now() - 30000) {
-            logger.log({
-              level: 'info',
-              message: Date.now()  + ': Game finished with Key: ' + key + ' Adress: ' + address
-            });
+            console.log(Date.now() + ': Game finished with Key: ' + key + ' Adress: ' + address);
             finishHim(socket);
             return;
           } else {
-            logger.log({
-              level: 'info',
-              message: Date.now()  + ': Too early attempt with Key: ' + key + ' Adress: ' + address
-            });
+            console.log(Date.now() + ': Too early attempt with Key: ' + key + ' Adress: ' + address);
             socket.emit("run", `
             window.onbeforeunload = () => {
               localStorage.setItem('mysecret', '${FINAL_KEY} ' + Date.now());
@@ -76,7 +51,7 @@ io.on('connection', (socket) => {
         socket.disconnect();
         return;
       }
-      rooms[key].push(socket);  
+      rooms[key].push(socket);
       if (rooms[key].length === 2) {
         var otherSocket = rooms[key][0];
         otherSocket.otherSocket = socket;
@@ -84,11 +59,7 @@ io.on('connection', (socket) => {
         socket.emit("teamon");
         socket.otherSocket.emit("teamon");
         const address = socket.handshake.address;
-        logger.log({
-          level: 'info',
-          message: Date.now()  + ': Sockets are connected to each other with key: ' + key + ' Adress: ' + address
-        });
-        console.log('sockets are connected to each other with key ' + key);
+        console.log(Date.now() + ': Sockets are connected to each other with key: ' + key + ' Adress: ' + address);
       }
     }
   });
@@ -110,10 +81,7 @@ io.on('connection', (socket) => {
         if (m1.draggingLeft && m2.draggingRight && m1.x < -300 && m2.x > 300 || m2.draggingLeft && m1.draggingRight && m2.x < -300 && m1.x > 300) {
 
           const address = socket.handshake.address;
-          logger.log({
-            level: 'info',
-            message: Date.now()  + ': Door opened with the key: ' + socket.gameKey + ' Adress: ' + address
-          });
+          console.log(Date.now() + ': Door opened with the key: ' + socket.gameKey + ' Adress: ' + address);
           const openDoorScript = `
             window.onbeforeunload = () => {
               localStorage.setItem('mysecret', '${FINAL_KEY} ' + Date.now());
