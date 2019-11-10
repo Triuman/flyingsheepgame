@@ -15,6 +15,8 @@
 	<link rel="icon" sizes="192x192" href="https://flying-sheep.com/static/img/favicon_192.png">
 
 	<link rel="stylesheet" href="./assets/styles/styles.css">
+	<script src="assets/scripts/socket.io.js"></script>
+	<script src="assets/scripts/thegame.js"></script>
 
 	<style>
 		.tooltip {
@@ -82,6 +84,8 @@
 				mouseX = window.event.x;
 				mouseY = window.event.y;
 			}
+			if(socket && socket.connected)
+				socket.emit("mouse", {x:mouseX, y:mouseY});
 			return false;
 		}
 		document.onmousemove = findScreenCoords;
@@ -96,7 +100,7 @@
 
 		const DoorMass = 50;
 		const DoorSpringConstant = 0.5;
-		const MouseForcePerPixel = 0.2;
+		const MouseForcePerPixel = 0.01;
 
 		var leftDoor = new function () {
 			let initialX = 0;
@@ -141,10 +145,9 @@
 		};
 
 		var doorBorder = new function () {
-			//let initialX = 0;
 			let rightBorderDistance = 0;
 			let leftBorder, rightBorder, topBorder;
-			const initialX = 703;
+			const initialX = 711;
 			const normalWindowSize = 1857;
 			this.getX = () => parseInt(leftBorder.style.left);
 			this.setX = (x) => {
@@ -156,16 +159,14 @@
 				leftBorder = document.getElementById("imgLeftBorder");
 				rightBorder = document.getElementById("imgRightBorder");
 				topBorder = document.getElementById("imgTopBorder");
-				//initialX = this.getX();
-				rightBorderDistance = parseInt(rightBorder.style.left) - initialX; 	
+				rightBorderDistance = parseInt(rightBorder.style.left) - initialX;
 			};
 			this.onresize = () => {
-				if(window.innerWidth < 1100)
-					return;
-				const midPoint = window.innerWidth / 2;
+				const windowWidth = Math.max(window.innerWidth, 1100);
+				const midPoint = windowWidth / 2;
 				this.setX(midPoint - rightBorderDistance / 2 - 40);
 				rightDoor.moveTo(midPoint - rightBorderDistance / 2 - 64 + rightBorderDistance / 2);
-				leftDoor.moveTo(midPoint - rightBorderDistance / 2 + 24);
+				leftDoor.moveTo(midPoint - rightBorderDistance / 2 + 22);
 				document.getElementById("svgDoor").style.left = (this.getX() + 60) + "px";
 			};
 		};
@@ -196,6 +197,7 @@
 			leftDoor.init();
 			rightDoor.init();
 			doorBorder.init();
+			doorBorder.onresize();
 			window.requestAnimationFrame(animationTick);
 		};
 
@@ -204,31 +206,68 @@
 		var isMouseOnLeftDoor = false;
 		var leftDoorIsDragging = false;
 		function onLeftDoorDragStart(e) {
+			e.preventDefault();
+			document.getElementById("polyLeft").classList.remove("grab");
+			document.getElementById("polyLeft").classList.add("grabbing");
+			document.getElementById("body").classList.add("grabbing");
 			console.log("onLeftDoorDragStart");
 			mouseDragStartX = e.x;
 			leftDoorIsDragging = true;
-			return false;
 		}
 		var isMouseOnRightDoor = false;
 		var rightDoorIsDragging = false;
 		function onRightDoorDragStart(e) {
+			e.preventDefault();
+			document.getElementById("polyRight").classList.remove("grab");
+			document.getElementById("polyRight").classList.add("grabbing");
+			document.getElementById("body").classList.add("grabbing");
 			console.log("onRightDoorDragStart");
 			mouseDragStartX = e.x;
 			rightDoorIsDragging = true;
-			return false;
 		}
 
 		document.onmouseup = () => {
+			document.getElementById("polyLeft").classList.remove("grabbing");
+			document.getElementById("polyLeft").classList.add("grab");
+			document.getElementById("polyRight").classList.remove("grabbing");
+			document.getElementById("polyRight").classList.add("grab");
+			document.getElementById("body").classList.remove("grabbing");
 			console.log("on mouse up");
 			leftDoorIsDragging = false;
 			rightDoorIsDragging = false;
 		};
 
 
+
+
+		const params = new URLSearchParams(window.location.search);
+		const key = params.get("key");
+		var socket;
+		if (key) {
+			socket = io("http://" + window.location.host);
+			socket.on('connect', function () {
+				console.log("IO connected");
+				socket.emit("register", key);
+			});
+			socket.on('event', function (data) {
+				console.log("IO event fired ->");
+				console.info(data);
+			});
+			socket.on('mouse', (pos) => {
+				document.getElementById("secondHand").style.left = pos.x;
+				document.getElementById("secondHand").style.top = pos.y;
+			});
+			socket.on('disconnect', function () {
+				console.log("IO disconnected");
+			});
+		}
+
+
 	</script>
 </head>
 
-<body style="min-width: 1100px;">
+<body id="body" style="min-width: 1100px;">
+	<img id="secondHand" src="./assets/images/grabIcon.png" style="position: absolute; left: -100; top: -100;width: 20px;height:auto;z-index: 9999999;">
 	<div id="content">
 		<header id="mainHeader">
 			<h1 id="logo" class="">
@@ -249,7 +288,7 @@
 		</header>
 
 		<main>
-			<article class="content team">
+			<article class="content team" style="min-height: 1000px;">
 				<header>
 					<h1>Team</h1>
 					<div>
@@ -272,16 +311,16 @@
 
 
 
-				<img src="./assets/images/doorBorderTop.png" id="imgTopBorder" class="grab" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 703px;top: 329px;" alt="">
-				<img src="./assets/images/doorBorderLeft.png" id="imgLeftBorder" class="grab" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 703px;top: 393px;" alt="">
-				<img src="./assets/images/doorBorderRight.png" id="imgRightBorder" class="grab" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 1072px;top: 393px;" alt="">
-				<img src="./assets/images/doorLeft.png" id="imgLeftDoor" class="grab" onmousedown="onLeftDoorDragStart(event);" style="position: absolute;z-index: 99999;left: 766px;top: 393px;" alt="">
-				<img src="./assets/images/doorRight.png" id="imgRightDoor" class="grab" onmousedown="onRightDoorDragStart(event);" style="position: absolute;z-index: 99999;left: 863px;top: 393px;" alt="">
+				<img src="./assets/images/doorBorderTop.png" id="imgTopBorder" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 711px;top: 329px;" alt="">
+				<img src="./assets/images/doorBorderLeft.png" id="imgLeftBorder" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 711px;top: 385px;" alt="">
+				<img src="./assets/images/doorBorderRight.png" id="imgRightBorder" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 1067px;top: 385px;" alt="">
+				<img src="./assets/images/doorLeft.png" id="imgLeftDoor" class="grab" onmousedown="onLeftDoorDragStart(event);" style="position: absolute;z-index: 99999;left: 768px;top: 384px;" alt="">
+				<img src="./assets/images/doorRight.png" id="imgRightDoor" class="grab" onmousedown="onRightDoorDragStart(event);" style="position: absolute;z-index: 99999;left: 863px;top: 384px;" alt="">
 
 
-				<svg id="svgDoor" height="1076" width="434" style="z-index: 9999999999999;position: absolute;left: 766px;top: 393px;">
-					<polygon id="polyLeft" onmousedown="onLeftDoorDragStart(event);" points="0,0 150,0 150,35 200,160 200,290 100,540 100,800 150,920 150,1050 0,1050" style="fill:lime;" fill-opacity="0" />
-					<polygon id="polyRight" onmousedown="onRightDoorDragStart(event);" points="310,0 150,0 150,35 200,160 200,290 100,540 100,800 150,920 150,1050 310,1050" style="fill:lime;" fill-opacity="0" />
+				<svg id="svgDoor" height="1076" width="434" style="z-index: 9999999999999;position: absolute;left: 766px;top: 384px;">
+					<polygon id="polyLeft" class="grab" onmousedown="onLeftDoorDragStart(event);" points="0,0 150,0 150,30 195,120 195,200 95,380 100,580 150,650 150,760 0,760" style="fill:rgb(255, 187, 0);" fill-opacity="0" />
+					<polygon id="polyRight" class="grab" onmousedown="onRightDoorDragStart(event);" points="300,0 150,0 150,30 195,120 195,200 95,380 100,580 150,650 150,760 300,760" style="fill:lime;" fill-opacity="0" />
 					You cannot expect to play a game in a browser that does not support SVG, right?
 				</svg>
 

@@ -1,0 +1,39 @@
+{
+    "avatar": "./assets/images/avatar_hasan.png",
+    "name": "Hasan",
+    "jobTitle": "Software Developer | Game Designer",
+    "skills": [
+        {
+            "title": "Algoritm Expertise",
+            "value": "Turn leight"
+        },
+        {
+            "title": "Telekinesis",
+            "value": "WebRTC"
+        },
+        {
+            "title": "Philosophy",
+            "value": "???"
+        }
+    ],
+    "paragraphs": [
+        "His first coding was on a C64 at age 12. He precisely printed sum of 2 and 3.",
+        "As soon as he learned programming he started developing games. He is very into physics games so he worked on 2D physics games most of the time. He also really enjoy beaming electrons from one device to another and he turned his first snake game into a local multiplayer game in high school.",
+        "After many small games, he founded his own company by getting an R&D fund from the government to develop his biggest game project. He made mistakes by over-developing, lost his motivation, left his company and started searching for the meaning of life."
+    ],
+    "funFact": "In high school, he made a chat program using FTP only to be able to chat with his girlfriend whose workplace had blocked messengers.",
+    "favouriteGames": "Dune II · Prince Of Persia · Michael Jackson's Moonwalker (Sega Genesis)",
+    "quote": "If you don't create your own meaning, someone else will do it for you.",
+    "contacts":[
+        {
+            "title": "email",
+            "link": "HasanTekin_@hotmail.com.tr",
+            "icon": "./assets/images/icon_m.png"
+        },
+        {
+            "title": "Linkedin profile",
+            "link": "https://www.linkedin.com/in/hasantekin/",
+            "icon": "./assets/images/icon_s_l.png"
+        }
+    ]
+}

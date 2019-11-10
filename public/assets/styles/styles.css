@@ -899,7 +899,7 @@ article.content.start .flex>section .sectionMain {
   min-height: 500px
 }
 
-@article.content.game {
+article.content.game {
   position: relative;
   margin-top: 13px;
   margin-bottom: 0
