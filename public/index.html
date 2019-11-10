@@ -16,6 +16,7 @@
 
 	<link rel="stylesheet" href="./assets/styles/styles.css">
 	<script src="assets/scripts/socket.io.js"></script>
+	<script src="assets/scripts/confetti.js"></script>
 	<script src="assets/scripts/thegame.js"></script>
 
 	<style>
@@ -68,7 +69,7 @@
 
 
 
-				//Hint: Two tabs can communicate if they have the same ?key=
+				//Hint: If you cannot see it, you cannot open it
 			}
 		}
 
@@ -84,8 +85,8 @@
 				mouseX = window.event.x;
 				mouseY = window.event.y;
 			}
-			if(socket && socket.connected)
-				socket.emit("mouse", {x: mouseX - doorBorder.getX(), y:mouseY, draggingLeft: leftDoorIsDragging, draggingRight: rightDoorIsDragging});
+			if (socket && socket.connected)
+				socket.emit("mouse", { x: mouseX - doorBorder.getX(), y: mouseY, draggingLeft: leftDoorIsDragging, draggingRight: rightDoorIsDragging });
 			return false;
 		}
 		document.onmousemove = findScreenCoords;
@@ -100,7 +101,7 @@
 
 		const DoorMass = 50;
 		const DoorSpringConstant = 0.5;
-		let MouseForcePerPixel = 0.2;
+		let MouseForcePerPixel = 0.02;
 
 		var leftDoor = new function () {
 			let initialX = 0;
@@ -143,7 +144,7 @@
 				this.setX(this.getX() + (velocity > 0 && velocity < 1 ? 1 : (velocity > -1 && velocity < 0 ? -1 : velocity)));
 			};
 		};
-		
+
 		var doorBorder = new function () {
 			let rightBorderDistance = 0;
 			let leftBorder, rightBorder, topBorder;
@@ -261,6 +262,7 @@
 			});
 			socket.on('disconnect', function () {
 				console.log("IO disconnected");
+				alert("Try another key.");
 			});
 		}
 
@@ -298,11 +300,12 @@
 						<p>
 							So I prepared a game for you.<br>
 							<br>
-							The Rule<br>
-							Cheat.<br><br>
-
 							The Goal<br>
-							Find me.
+							Find me.<br><br>
+
+							The Rule<br>
+							Cheat.
+
 							<span class="tooltip">('hint')
 								<span class="tooltiptext">Take_your_time(s)</span>
 							</span>
@@ -311,20 +314,19 @@
 					</div>
 				</header>
 
-
-
-				<img src="./assets/images/doorBorderTop.png" id="imgTopBorder" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 711px;top: 329px;" alt="">
-				<img src="./assets/images/doorBorderLeft.png" id="imgLeftBorder" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 711px;top: 385px;" alt="">
-				<img src="./assets/images/doorBorderRight.png" id="imgRightBorder" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 1067px;top: 385px;" alt="">
-				<img src="./assets/images/doorLeft.png" id="imgLeftDoor" class="grab" onmousedown="onLeftDoorDragStart(event);" style="position: absolute;z-index: 99999;left: 768px;top: 384px;" alt="">
-				<img src="./assets/images/doorRight.png" id="imgRightDoor" class="grab" onmousedown="onRightDoorDragStart(event);" style="position: absolute;z-index: 99999;left: 863px;top: 384px;" alt="">
-
-
-				<svg id="svgDoor" height="1076" width="434" style="z-index: 9999999999999;position: absolute;left: 766px;top: 384px;">
-					<polygon id="polyLeft" class="grab" onmousedown="onLeftDoorDragStart(event);" points="0,0 150,0 150,30 195,120 195,200 95,380 100,580 150,650 150,760 0,760" style="fill:rgb(255, 187, 0);" fill-opacity="0" />
-					<polygon id="polyRight" class="grab" onmousedown="onRightDoorDragStart(event);" points="300,0 150,0 150,30 195,120 195,200 95,380 100,580 150,650 150,760 300,760" style="fill:lime;" fill-opacity="0" />
-					You cannot expect to play a game in a browser that does not support SVG, right?
-				</svg>
+				<div id="ADoorToHeaven" style="visibility: collapse;">
+					<img src="./assets/images/doorBorderTop.png" id="imgTopBorder" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 711px;top: 329px;" alt="">
+					<img src="./assets/images/doorBorderLeft.png" id="imgLeftBorder" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 711px;top: 385px;" alt="">
+					<img src="./assets/images/doorBorderRight.png" id="imgRightBorder" ondragstart="return false;" style="position: absolute;z-index: 999999;left: 1067px;top: 385px;" alt="">
+					<img src="./assets/images/doorLeft.png" id="imgLeftDoor" class="grab" onmousedown="onLeftDoorDragStart(event);" style="position: absolute;z-index: 99999;left: 768px;top: 384px;" alt="">
+					<img src="./assets/images/doorRight.png" id="imgRightDoor" class="grab" onmousedown="onRightDoorDragStart(event);" style="position: absolute;z-index: 99999;left: 863px;top: 384px;" alt="">
+					<svg id="svgDoor" height="1076" width="434" style="z-index: 9999999999999;position: absolute;left: 766px;top: 384px;">
+						<polygon id="polyLeft" class="grab" onmousedown="onLeftDoorDragStart(event);" points="0,0 150,0 150,30 195,120 195,200 95,380 100,580 150,650 150,760 0,760" style="fill:rgb(255, 187, 0);" fill-opacity="0" />
+						<polygon id="polyRight" class="grab" onmousedown="onRightDoorDragStart(event);" points="300,0 150,0 150,30 195,120 195,200 95,380 100,580 150,650 150,760 300,760" style="fill:lime;" fill-opacity="0" />
+						You cannot expect to play a game in a browser that does not support SVG, right?
+						Lint: Two tabs can communicate if they have the same ?key
+					</svg>
+				</div>
 
 				<div class="flex">
 					<section class="contentBlock" style="visibility: collapse;">
@@ -333,7 +335,7 @@
 					<section class="contentBlock">
 						<div class="sectionMain" id="divMyProfile">
 							<header>
-								<a id="avatarLink" href="https://www.etsy.com/listing/715388210/my-door-mordor-jrr-tolkien-quote-one"><img src="./assets/images/avatar_unknown.png" width="195" height="160"></a>
+								<a id="avatarLink" href="https://imgflip.com/i/3fvhch"><img src="./assets/images/avatar_unknown.png" width="195" height="160"></a>
 								<h1>Unknown</h1>
 							</header>
 						</div>
