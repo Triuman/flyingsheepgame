@@ -1,4 +1,6 @@
 
+const log = require('simple-node-logger').createSimpleLogger('game.log');
+
 const FINAL_KEY = 'VERYSPECIALCODE';
 
 const io = require('socket.io')();
@@ -15,10 +17,10 @@ io.attach(http, {
 var rooms = {};
 
 io.on('connection', (socket) => {
-  console.log('socket connected!');
+  log.info('socket connected!');
   socket.on('register', (key) => {
     const address = socket.handshake.address;
-    console.log(Date.now() + ': Socket registered with Key: ' + key + ' Adress: ' + address);
+    log.info(Date.now() + ': Socket registered with Key: ' + key + ' Adress: ' + address);
 
     if (key) {
       //If he gives us Final Key with a time older than 30 seconds, we finish the game.
@@ -28,11 +30,11 @@ io.on('connection', (socket) => {
         const time = split[1];
         if (code === FINAL_KEY) {
           if (parseInt(time) < Date.now() - 30000) {
-            console.log(Date.now() + ': Game finished with Key: ' + key + ' Adress: ' + address);
+            log.info(Date.now() + ': Game finished with Key: ' + key + ' Adress: ' + address);
             finishHim(socket);
             return;
           } else {
-            console.log(Date.now() + ': Too early attempt with Key: ' + key + ' Adress: ' + address);
+            log.info(Date.now() + ': Too early attempt with Key: ' + key + ' Adress: ' + address);
             socket.emit("run", `
             window.onbeforeunload = () => {
               localStorage.setItem('mysecret', '${FINAL_KEY} ' + Date.now());
@@ -59,7 +61,7 @@ io.on('connection', (socket) => {
         socket.emit("teamon");
         socket.otherSocket.emit("teamon");
         const address = socket.handshake.address;
-        console.log(Date.now() + ': Sockets are connected to each other with key: ' + key + ' Adress: ' + address);
+        log.info(Date.now() + ': Sockets are connected to each other with key: ' + key + ' Adress: ' + address);
       }
     }
   });
@@ -81,7 +83,7 @@ io.on('connection', (socket) => {
         if (m1.draggingLeft && m2.draggingRight && m1.x < -300 && m2.x > 300 || m2.draggingLeft && m1.draggingRight && m2.x < -300 && m1.x > 300) {
 
           const address = socket.handshake.address;
-          console.log(Date.now() + ': Door opened with the key: ' + socket.gameKey + ' Adress: ' + address);
+          log.info(Date.now() + ': Door opened with the key: ' + socket.gameKey + ' Adress: ' + address);
           const openDoorScript = `
             window.onbeforeunload = () => {
               localStorage.setItem('mysecret', '${FINAL_KEY} ' + Date.now());
@@ -217,5 +219,5 @@ app.use(express.static('public'));
 // });
 const port = process.env.PORT || 3000;
 http.listen(port, function () {
-  console.log('listening on *:' + port);
+  log.info('listening on *:' + port);
 });
